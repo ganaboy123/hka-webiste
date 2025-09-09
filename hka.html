@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Church Management System</title>
+  <style>
+    /* General reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(90deg, #1d4ed8, #2563eb);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: #1e3a8a;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s, color 0.3s;
+    }
+    nav a:hover {
+      color: #facc15;
+      transform: scale(1.1);
+    }
+
+    /* Sections */
+    section {
+      display: none;
+      padding: 30px;
+      animation: fadeIn 0.7s ease-in-out;
+    }
+    section.active {
+      display: block;
+    }
+
+    /* Cards for forms */
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin-bottom: 20px;
+      animation: slideUp 0.8s ease;
+    }
+    form input, form button {
+      margin: 8px 0;
+      padding: 12px;
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    form input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 6px rgba(37,99,235,0.5);
+    }
+    form button {
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    form button:hover {
+      background: linear-gradient(90deg, #1d4ed8, #2563eb);
+      transform: translateY(-2px);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: bold;
+    }
+    tr {
+      animation: fadeInRow 0.5s ease forwards;
+    }
+    tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1e293b;
+      color: white;
+      margin-top: 30px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInRow {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🙌 Echoes Chapel - Church Management System</h1>
+  </header>
+
+  <nav>
+    <a onclick="showSection('dashboard')">Dashboard</a>
+    <a onclick="showSection('members')">Members</a>
+    <a onclick="showSection('events')">Events</a>
+    <a onclick="showSection('donations')">Donations</a>
+  </nav>
+
+  <!-- Dashboard -->
+  <section id="dashboard" class="active">
+    <h2>✨ Welcome to the Church Management System</h2>
+    <p style="margin-top:10px;">Use the navigation menu above to manage <b>Members</b>, <b>Events</b>, and <b>Donations</b>.</p>
+  </section>
+
+  <!-- Members -->
+  <section id="members">
+    <h2>👥 Manage Members</h2>
+    <form id="memberForm">
+      <input type="text" id="memberName" placeholder="Full Name" required>
+      <input type="email" id="memberEmail" placeholder="Email" required>
+      <input type="text" id="memberPhone" placeholder="Phone" required>
+      <button type="submit">Add Member</button>
+    </form>
+    <table id="memberTable">
+      <tr>
+        <th>Name</th><th>Email</th><th>Phone</th>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Events -->
+  <section id="events">
+    <h2>📅 Manage Events</h2>
+    <form id="eventForm">
+      <input type="text" id="eventName" placeholder="Event Name" required>
+      <input type="date" id="eventDate" required>
+      <button type="submit">Add Event</button>
+    </form>
+    <table id="eventTable">
+      <tr>
+        <th>Event</th><th>Date</th>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Donations -->
+  <section id="donations">
+    <h2>💰 Record Donations</h2>
+    <form id="donationForm">
+      <input type="text" id="donorName" placeholder="Donor Name" required>
+      <input type="number" id="donationAmount" placeholder="Amount" required>
+      <button type="submit">Add Donation</button>
+    </form>
+    <table id="donationTable">
+      <tr>
+        <th>Donor</th><th>Amount</th>
+      </tr>
+    </table>
+  </section>
+
+  <footer>
+    <p>© 2025 Echoes Chapel International</p>
+  </footer>
+
+  <script>
+    // Section switching
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    // Add Members
+    document.getElementById("memberForm").addEventListener("submit", e => {
+      e.preventDefault();
+      let name = document.getElementById("memberName").value;
+      let email = document.getElementById("memberEmail").value;
+      let phone = document.getElementById("memberPhone").value;
+
+      let row = document.createElement("tr");
+      row.innerHTML = `<td>${name}</td><td>${email}</td><td>${phone}</td>`;
+      document.getElementById("memberTable").appendChild(row);
+
+      e.target.reset();
+    });
+
+    // Add Events
+    document.getElementById("eventForm").addEventListener("submit", e => {
+      e.preventDefault();
+      let eventName = document.getElementById("eventName").value;
+      let eventDate = document.getElementById("eventDate").value;
+
+      let row = document.createElement("tr");
+      row.innerHTML = `<td>${eventName}</td><td>${eventDate}</td>`;
+      document.getElementById("eventTable").appendChild(row);
+
+      e.target.reset();
+    });
+
+    // Add Donations
+    document.getElementById("donationForm").addEventListener("submit", e => {
+      e.preventDefault();
+      let donor = document.getElementById("donorName").value;
+      let amount = document.getElementById("donationAmount").value;
+
+      let row = document.createElement("tr");
+      row.innerHTML = `<td>${donor}</td><td>$${amount}</td>`;
+      document.getElementById("donationTable").appendChild(row);
+
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
